@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:first_flutter_app/lib/All_screens/NoteList.dart';
+import './All_screens/NoteList.dart';
+import './All_screens/NoteDetail.dart';
 
 void main(){
   runApp(NoteListApp());
