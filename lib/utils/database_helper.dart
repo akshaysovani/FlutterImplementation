@@ -45,7 +45,7 @@ class DatabaseHelper {
   void _create_db(Database db, int newVersion) async {
     await db.execute(
         'CREATE TABLE $noteTable($colId INTEGER PRIMARY KEY AUTOINCREMENT, $colTitle TEXT, $colDescription TEXT'
-        '$colDate TEXT, $colPriority INTEGER');
+        ', $colDate TEXT, $colPriority INTEGER)');
   }
 
   //Fetch List of Map objects from database

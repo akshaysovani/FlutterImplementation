@@ -137,8 +137,7 @@ class NoteDetailState extends State<NoteDetail> {
                         ),
                         onPressed: () {
                           setState(() {
-
-
+                            _delete();
                           });
                         },
                       ),
@@ -158,15 +157,15 @@ class NoteDetailState extends State<NoteDetail> {
   }
 
   void goToPreviousPage() {
-    Navigator.pop(context);
+    Navigator.pop(context,true);
   }
 
   void convertAndUpdatePriorityFromStringToInt(String value){
     switch(value){
-      case 'high':
+      case 'High':
         note.priority = 1;
         break;
-      case 'low':
+      case 'Low':
         note.priority = 2;
         break;
     }
@@ -176,10 +175,10 @@ class NoteDetailState extends State<NoteDetail> {
     String priority;
     switch(value){
       case 1:
-        priority = _priorities[1]; //high
+        priority = _priorities[0]; //high
         break;
       case 2:
-        priority = _priorities[2]; //low
+        priority = _priorities[1]; //low
         break;
     }
     return priority;
@@ -225,8 +224,17 @@ class NoteDetailState extends State<NoteDetail> {
   }
 
   void _delete() async{
-     if (note.id == null){
+     goToPreviousPage();
+     if (note.id == null){  ///If delete operation was performed after +.
+       _showAlertDialogue('Status','No note was deleted from the database');
+     }else{
+       int result = await databaseHelper.deleteNote(note.id);
 
+       if (result != 0){ // success
+         _showAlertDialogue('Status','Note deleted successfully');
+       }else{  // failure
+         _showAlertDialogue('Status','Problem while deleting Note');
+       }
      }
   }
 }
